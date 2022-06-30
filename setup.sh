@@ -1,15 +1,32 @@
 #!/usr/bin/env bash
 set -e
 
-rm -rf tmp .build source out jenkinsfile-runner
+JENKINS_VERSION=2.319.3
+JENKINS_PM_VERSION=2.5.0
+JENKINS_PM_URL=https://github.com/jenkinsci/plugin-installation-manager-tool/releases/download/${JENKINS_PM_VERSION}/jenkins-plugin-manager-${JENKINS_PM_VERSION}.jar
+JENKINS_CORE_URL=http://updates.jenkins.io/download/war/${JENKINS_VERSION}/jenkins.war
+JFR_VERSION=1.0-beta-30
+JENKINS_JFR_URL=https://github.com/jenkinsci/jenkinsfile-runner/releases/download/${JFR_VERSION}/jenkinsfile-runner-${JFR_VERSION}.zip
 
-ARTIFACT_ID=jenkinsfile-runner-demo
-VERSION=256.0-test
-CWP_VERSION=1.3
+# download Jenkins core
+mkdir -p /app
+echo "Downloading Jenkins core"
+curl -L ${JENKINS_CORE_URL} -o /app/jenkins.war
+unzip /app/jenkins.war /app/jenkins
 
-git clone https://github.com/jenkinsci/jenkinsfile-runner
-rsync -av --exclude='.git' --exclude='demo' --exclude='tests' --exclude='*/target/*' jenkinsfile-runner/* source
+echo "Downloading Jenkinsfile-runner"
+curl -L ${JENKINS_JFR_URL} -o /app/jenkinsfile-runner-${JFR_VERSION}.zip
+unzip -q /app/jenkinsfile-runner-${JFR_VERSION}.zip -d /app
+rm /app/jenkinsfile-runner-${JFR_VERSION}.zip
+chmod +x /app/bin/jenkinsfile-runner
 
-mkdir -p .build
-wget -O .build/cwp-cli-${CWP_VERSION}.jar https://repo.jenkins-ci.org/releases/io/jenkins/tools/custom-war-packager/custom-war-packager-cli/${CWP_VERSION}/custom-war-packager-cli-${CWP_VERSION}-jar-with-dependencies.jar
-java -jar .build/cwp-cli-${CWP_VERSION}.jar -configPath packager-config.yml -tmpDir out/tmp -version ${VERSION}
+# download plugin manager
+echo "Downloading plugin manager"
+wget $JENKINS_PM_URL -O /app/bin/jenkins-plugin-manager.jar
+
+# download plugins
+echo "Downloading minimum required plugins..."
+mkdir -p /usr/share/jenkins/ref/plugins
+java -jar /app/bin/jenkins-plugin-manager.jar --war /app/jenkins.war --plugin-file "$1" --plugin-download-directory=/usr/share/jenkins/ref/plugins
+
+echo "Jenkins plugins has been set up"
