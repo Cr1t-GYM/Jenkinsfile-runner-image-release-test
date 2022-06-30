@@ -59,6 +59,7 @@ jobs:
       - run: docker images
         shell: bash
       - name: test2
+        uses: docker/build-push-action@v2.6.1
         with:
           file: Dockerfile2
           load: true
