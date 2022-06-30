@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -e
 
-ARTIFACT_ID = jenkinsfile-runner-demo
-VERSION = 256.0-test
-CWP_VERSION = 1.3
+ARTIFACT_ID=jenkinsfile-runner-demo
+VERSION=256.0-test
+CWP_VERSION=1.3
 JENKINSFILE_RUNNER_TAG=jenkins-local/jenkinsfile-runner-single
 
 git clone https://github.com/jenkinsci/jenkinsfile-runner
