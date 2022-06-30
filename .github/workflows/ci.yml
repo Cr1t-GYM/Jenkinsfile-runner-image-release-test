@@ -36,6 +36,13 @@ jobs:
       - name: Build Custom War Package
         run: ./setup.sh
         shell: bash
+      - name: Build base image
+        uses: docker/build-push-action@v2.6.1
+        with:
+          file: out/tmp/output/Dockerfile
+          context: out/tmp/output/
+          load: true
+          tags: jenkins-local/jenkinsfile-runner-single:latest
       - name: Build Docker image
         uses: docker/build-push-action@v2.6.1
         with:
