@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-rm -rf tmp .build source out
+rm -rf tmp .build source out jenkinsfile-runner
 
 ARTIFACT_ID=jenkinsfile-runner-demo
 VERSION=256.0-test
