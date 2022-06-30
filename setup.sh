@@ -13,6 +13,7 @@ rsync -av --exclude='.git' --exclude='demo' --exclude='tests' --exclude='*/targe
 
 mkdir -p .build
 wget -O .build/cwp-cli-${CWP_VERSION}.jar https://repo.jenkins-ci.org/releases/io/jenkins/tools/custom-war-packager/custom-war-packager-cli/${CWP_VERSION}/custom-war-packager-cli-${CWP_VERSION}-jar-with-dependencies.jar
+echo "java -jar .build/cwp-cli-${CWP_VERSION}.jar -configPath packager-config.yml -tmpDir $(shell pwd)/out/tmp -version ${VERSION}"
 java -jar .build/cwp-cli-${CWP_VERSION}.jar -configPath packager-config.yml -tmpDir $(shell pwd)/out/tmp -version ${VERSION}
 
 # docker build -t ${JENKINSFILE_RUNNER_TAG} -f $(shell pwd)/out/tmp/output/Dockerfile $(shell pwd)/out/tmp/output/	
