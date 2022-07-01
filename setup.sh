@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-JENKINS_VERSION=2.319.3
+JENKINS_VERSION=2.346.1
 JENKINS_PM_VERSION=2.5.0
 JENKINS_PM_URL=https://github.com/jenkinsci/plugin-installation-manager-tool/releases/download/${JENKINS_PM_VERSION}/jenkins-plugin-manager-${JENKINS_PM_VERSION}.jar
 JENKINS_CORE_URL=http://updates.jenkins.io/download/war/${JENKINS_VERSION}/jenkins.war
@@ -12,7 +12,7 @@ JENKINS_JFR_URL=https://github.com/jenkinsci/jenkinsfile-runner/releases/downloa
 mkdir -p /app
 echo "Downloading Jenkins core"
 curl -L ${JENKINS_CORE_URL} -o /app/jenkins.war
-unzip /app/jenkins.war /app/jenkins
+unzip /app/jenkins.war -d /app/jenkins
 
 echo "Downloading Jenkinsfile-runner"
 curl -L ${JENKINS_JFR_URL} -o /app/jenkinsfile-runner-${JFR_VERSION}.zip
