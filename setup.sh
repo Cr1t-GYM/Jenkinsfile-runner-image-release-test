@@ -17,9 +17,9 @@ unzip /app/jenkins.war -d /app/jenkins
 echo "Downloading Jenkinsfile-runner"
 curl -L ${JENKINS_JFR_URL} -o /app/jenkinsfile-runner-${JFR_VERSION}.zip
 unzip -q /app/jenkinsfile-runner-${JFR_VERSION}.zip -d /app
-cp /app/bin/jenkinsfile-runner /app/bin/jenkinsfile-runner-launcher
 rm /app/jenkinsfile-runner-${JFR_VERSION}.zip
 chmod +x /app/bin/jenkinsfile-runner
+cp /app/bin/jenkinsfile-runner /app/bin/jenkinsfile-runner-launcher
 
 # download plugin manager
 echo "Downloading plugin manager"
