@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - run: git clone https://github.com/actions/cache
+        shell: bash
       - uses: addnab/docker-run-action@v3
         with: 
           image: jenkins/jenkinsfile-runner:latest
