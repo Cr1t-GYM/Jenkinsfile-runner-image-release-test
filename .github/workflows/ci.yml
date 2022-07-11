@@ -9,15 +9,12 @@ jobs:
   dry_run_action:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
       - uses: addnab/docker-run-action@v3
         with: 
           image: jenkins/jenkinsfile-runner:latest
           shell: bash
           options: -v ${{ github.workspace }}:/work -w /work -e ACTIONS_CACHE_URL -e GITHUB_REF
-          run: /work/entrypoint.sh
+          run: ls -al /work && /work/entrypoint.sh
   build-and-publish:
     if: ${{ github.ref == 'refs/heads/master' }}
     runs-on: ubuntu-latest
