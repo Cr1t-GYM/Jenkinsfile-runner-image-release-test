@@ -9,6 +9,8 @@ jobs:
   dry_run_action:
     runs-on: ubuntu-latest
     steps:
+      - run: ls -al ${{ github.workspace }}
+        shell: bash
       - uses: addnab/docker-run-action@v3
         with: 
           image: jenkins/jenkinsfile-runner:latest
