@@ -9,14 +9,13 @@ jobs:
   dry_run_action:
     runs-on: ubuntu-latest
     steps:
-      - run: ls -al ${{ github.workspace }}
-        shell: bash
-      # - uses: addnab/docker-run-action@v3
-      #   with: 
-      #     image: jenkins/jenkinsfile-runner:latest
-      #     shell: bash
-      #     options: -v ${{ github.workspace }}:/work -w /work -e ACTIONS_CACHE_URL -e GITHUB_REF
-      #     run: ls -al /work && /work/entrypoint.sh
+      - uses: actions/checkout@v3
+      - uses: addnab/docker-run-action@v3
+        with: 
+          image: jenkins/jenkinsfile-runner:latest
+          shell: bash
+          options: -v ${{ github.workspace }}:/work -w /work -e ACTIONS_CACHE_URL -e GITHUB_REF
+          run: /work/entrypoint.sh
   build-and-publish:
     if: ${{ github.ref == 'refs/heads/master' }}
     runs-on: ubuntu-latest
